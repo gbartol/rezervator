@@ -79,8 +79,8 @@ def create_table_users():
     cursor = db.cursor();
 
     cursor.execute(
-        'CREATE TABLE IF NOT EXISTS dz2_users (' +
-        'id int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
+        'CREATE TABLE IF NOT EXISTS users (' +
+        'id_user int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
         'username varchar(50) NOT NULL,' +
         'password_hash varchar(255) NOT NULL,' +
         'email varchar(50) NOT NULL,' +
@@ -94,25 +94,27 @@ def create_table_users():
 
 
 # -------------------- TODO: Zamijeniti ovo sa stvarnim tablicama koje ćemo koristiti
-def create_table_follows():
+def create_table_reservations():
     # Stvori tablicu follows.
     # Za svako "praćenje" pamtimo id korisnika, te id korisnika koji ga prati.
     db = get_db_connection();
     cursor = db.cursor();
 
     cursor.execute(
-        'CREATE TABLE IF NOT EXISTS dz2_follows (' +
+        'CREATE TABLE IF NOT EXISTS reservations(' +
+        'id_reservation int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
         'id_user int NOT NULL,' +
-        'id_followed_user int NOT NULL)' );
+        'id_performance NOT NULL,' +
+        'id_seat NOT NULL)' );
 
     db.commit();
     cursor.close();
 
-    return f'create_table_follows: OK';
+    return f'create_table_reservations: OK';
 
 
 # -------------------- TODO: Zamijeniti ovo sa stvarnim tablicama koje ćemo koristiti
-def create_table_quacks():
+def create_table_plays():
     # Stvori tablicu quacks.
     # Svaki quack ima svoj id (automatski će se povećati za svaku novoubačeni quack), id korisnika koji je objavio quack,
     # samu poruku koja čini quack, te datum i vrijeme kad je quack objavljen.
@@ -120,16 +122,96 @@ def create_table_quacks():
     cursor = db.cursor();
 
     cursor.execute(
-        'CREATE TABLE IF NOT EXISTS dz2_quacks (' +
-        'id int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
-        'id_user INT NOT NULL,' +
-        'quack varchar(140) NOT NULL,' +
-        'date DATETIME NOT NULL)' );
+        'CREATE TABLE IF NOT EXISTS plays(' +
+        'id_play int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
+        'title_play varchar(140) NOT NULL,' +
+        'genre_play varchar(140) NOT NULL,' +
+        'duration_play TIME NOT NULL,' +
+        'description_play varchar(1000))' );
 
     db.commit();
     cursor.close();
 
-    return f'create_table_quacks: OK';
+    return f'create_table_plays: OK';
+
+
+def create_table_performances():
+    # Stvori tablicu quacks.
+    # Svaki quack ima svoj id (automatski će se povećati za svaku novoubačeni quack), id korisnika koji je objavio quack,
+    # samu poruku koja čini quack, te datum i vrijeme kad je quack objavljen.
+    db = get_db_connection();
+    cursor = db.cursor();
+
+    cursor.execute(
+        'CREATE TABLE IF NOT EXISTS performances(' +
+        'id_performance int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
+        'id_play int NOT NULL,' +
+        'id_hall int NOT NULL,' +
+        'date_performance DATETIME NOT NULL,' +
+        'price_performance float(10))' )# TODO: vidjeti je li radi, ako ne probati s decimal
+
+    db.commit();
+    cursor.close();
+
+    return f'create_table_performances: OK';
+
+
+def create_table_halls():
+    # Stvori tablicu quacks.
+    # Svaki quack ima svoj id (automatski će se povećati za svaku novoubačeni quack), id korisnika koji je objavio quack,
+    # samu poruku koja čini quack, te datum i vrijeme kad je quack objavljen.
+    db = get_db_connection();
+    cursor = db.cursor();
+
+    cursor.execute(
+        'CREATE TABLE IF NOT EXISTS halls(' +
+        'id_hall int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
+        'id_location int NOT NULL,' +
+        'hall_capacity int)' );
+
+    db.commit();
+    cursor.close();
+
+    return f'create_table_halls: OK';
+
+
+def create_table_locations():
+    # Stvori tablicu quacks.
+    # Svaki quack ima svoj id (automatski će se povećati za svaku novoubačeni quack), id korisnika koji je objavio quack,
+    # samu poruku koja čini quack, te datum i vrijeme kad je quack objavljen.
+    db = get_db_connection();
+    cursor = db.cursor();
+
+    cursor.execute(
+        'CREATE TABLE IF NOT EXISTS locations(' +
+        'id_location int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
+        'name_location varchar(140) NOT NULL,' +
+        'address_location varchar(500) NOT NULL)' );
+
+    db.commit();
+    cursor.close();
+
+    return f'create_table_halls: OK';
+
+
+def create_table_seats():
+    # Stvori tablicu quacks.
+    # Svaki quack ima svoj id (automatski će se povećati za svaku novoubačeni quack), id korisnika koji je objavio quack,
+    # samu poruku koja čini quack, te datum i vrijeme kad je quack objavljen.
+    db = get_db_connection();
+    cursor = db.cursor();
+
+    cursor.execute(
+        'CREATE TABLE IF NOT EXISTS seats(' +
+        'id_seat int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
+        'id_hall int NOT NULL,' +
+        'row_seat int NOT NULL,' +
+        'column_seat int NOT NULL' );
+
+    db.commit();
+    cursor.close();
+
+    return f'create_table_seats: OK';
 
 
 # -------------------- TODO: Zamijeniti ovo sa stvarnim tablicama koje ćemo koristiti
