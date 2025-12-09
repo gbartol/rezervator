@@ -70,7 +70,7 @@ def has_tables():
     return ret;
 
 
-# -------------------- TODO: Zamijeniti ovo sa stvarnim tablicama koje ćemo koristiti
+
 def create_table_users():
     # Stvori tablicu users.
     # Svaki user ima svoj id (automatski će se povećati za svakog novoubačenog korisnika), korisničko ime, password hash, email,
@@ -93,7 +93,6 @@ def create_table_users():
     return f'create_table_users: OK';
 
 
-# -------------------- TODO: Zamijeniti ovo sa stvarnim tablicama koje ćemo koristiti
 def create_table_reservations():
     # Stvori tablicu follows.
     # Za svako "praćenje" pamtimo id korisnika, te id korisnika koji ga prati.
@@ -103,9 +102,9 @@ def create_table_reservations():
     cursor.execute(
         'CREATE TABLE IF NOT EXISTS reservations(' +
         'id_reservation int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
-        'id_user int NOT NULL,' +
-        'id_performance NOT NULL,' +
-        'id_seat NOT NULL)' );
+        'id_user int NOT NULL FOREIGN KEY,' +
+        'id_performance int NOT NULL FOREIGN KEY,' +
+        'id_seat int NOT NULL FOREIGN KEY');
 
     db.commit();
     cursor.close();
@@ -113,7 +112,6 @@ def create_table_reservations():
     return f'create_table_reservations: OK';
 
 
-# -------------------- TODO: Zamijeniti ovo sa stvarnim tablicama koje ćemo koristiti
 def create_table_plays():
     # Stvori tablicu quacks.
     # Svaki quack ima svoj id (automatski će se povećati za svaku novoubačeni quack), id korisnika koji je objavio quack,
@@ -145,8 +143,8 @@ def create_table_performances():
     cursor.execute(
         'CREATE TABLE IF NOT EXISTS performances(' +
         'id_performance int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
-        'id_play int NOT NULL,' +
-        'id_hall int NOT NULL,' +
+        'id_play int NOT NULL FOREIGN KEY,' +
+        'id_hall int NOT NULL FOREIGN KEY,' +
         'date_performance DATETIME NOT NULL,' +
         'price_performance float(10))' )# TODO: vidjeti je li radi, ako ne probati s decimal
 
@@ -166,7 +164,7 @@ def create_table_halls():
     cursor.execute(
         'CREATE TABLE IF NOT EXISTS halls(' +
         'id_hall int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
-        'id_location int NOT NULL,' +
+        'id_location int NOT NULL FOREIGN KEY,' +
         'hall_capacity int)' );
 
     db.commit();
@@ -204,7 +202,7 @@ def create_table_seats():
     cursor.execute(
         'CREATE TABLE IF NOT EXISTS seats(' +
         'id_seat int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
-        'id_hall int NOT NULL,' +
+        'id_hall int NOT NULL FOREIGN KEY,' +
         'row_seat int NOT NULL,' +
         'column_seat int NOT NULL' );
 
@@ -216,30 +214,153 @@ def create_table_seats():
 
 # -------------------- TODO: Zamijeniti ovo sa stvarnim tablicama koje ćemo koristiti
 def seed_table_users():
-    # Ubaci neke korisnike u tablicu users.
     # Uočimo da ne treba specificirati id koji se automatski poveća kod svakog ubacivanja.
     db = get_db_connection();
     cursor = db.cursor();
 
-    sql = 'INSERT INTO dz2_users(username, password_hash, email, registration_sequence, has_registered) VALUES (%(username)s, %(password)s, \'a@b.com\', \'abc\', \'1\')';
+    sql = 'INSERT INTO rezervator_users(username, password_hash, email, registration_sequence, has_registered) VALUES (%(username)s, %(password)s, \'a@b.com\', \'abc\', \'1\')';
 
     cursor.execute( sql,
-        {'username': 'elon', 'password': generate_password_hash( 'tesla' ) } );
+        {'username': 'AnaPofuk', 'password': generate_password_hash( 'AninaSifra' ) } );
 
     cursor.execute( sql,
-        {'username': 'KingJames', 'password': generate_password_hash( 'lebron' ) } );
+        {'username': 'FranjoSitej', 'password': generate_password_hash( 'kucaposo' ) } );
 
     cursor.execute( sql,
-        {'username': 'StephenCurry30', 'password': generate_password_hash( '402' ) } );
+        {'username': 'MilanManojlovic', 'password': generate_password_hash( 'dva' ) } );
 
     cursor.execute( sql,
-        {'username': 'billgates', 'password': generate_password_hash( 'mirkosoft' ) } );
+        {'username': 'LeonLucic', 'password': generate_password_hash( 'KrimTim2' ) } );
 
     db.commit();
     cursor.close();
 
     return f'seed_table_users: OK';
 
+
+def seed_table_reservations():
+    db = get_db_connection();
+    cursor = db.cursor();
+    
+    sql = 'INSERT INTO rezervator_reservations(id_user, id_performance, id_seat) VALUES (%(id_user)s, %(id_performance)s, %(id_seat)s)'
+
+    cursor execute (sql , 
+        {'id_user': '1', 'id_performance': '1', 'id_seat' : '1'})
+    cursor execute (sql , 
+        {'id_user': '1', 'id_performance': '1', 'id_seat' : '2'})
+    cursor execute (sql , 
+        {'id_user': '2', 'id_performance': '1', 'id_seat' : '4'})
+    cursor execute (sql , 
+        {'id_user': '3', 'id_performance': '1', 'id_seat' : '7'})
+    cursor execute (sql , 
+        {'id_user': '4', 'id_performance': '2', 'id_seat' : '1'})
+    cursor execute (sql , 
+        {'id_user': '5', 'id_performance': '2', 'id_seat' : '5'})
+
+    db.commit();
+    cursor.close();
+
+    return f'seed_table_reservations: OK';
+
+
+
+def seed_table_plays():
+    db = get_db_connection();
+    cursor = db.cursor();
+
+    
+    sql = 'INSERT INTO rezervator_plays(title_play, genre_play, duration_play, description_play) VALUES (%(title)s, %(genre)s, %(duration)s, %(description)s)'
+
+    cursor execute (sql, 
+        {'title' : 'Kosilica kosi lica', 'genre' : 'horror', 'duration' : '45',
+        'description' : "After Matija inherits his grandfathers vineyard he and his friends soon discover that his grandfather's passing is not so innocent as it seems"}
+        )
+
+    cursor execute (sql, 
+        {'title' : 'Podzemni Akordi', 'genre' : 'action', 'duration' : '20',
+        'description' : "When three teenage musicians show up to a seemingly empty rehearsal space, they expect nothing more than a jam session. Instead, they uncover a neo-Nazi hideout and a fresh corpse. As they scramble to escape, they're drawn into a violent cat-and-mouse game with a trio of dangerous extremists. What begins as a case of wrong place, wrong time spirals into a nightmarish battle for survival. In the silence between the chords, Podzemni Akordi strikes with tension, dark humor, and a raw portrayal of youth crashing into the brutal realities hidden beneath the surface of everyday life."})
+
+    cursor execute (sql, 
+        {'title' : 'Đavolja loza', 'genre' : 'slasher', 'duration' : '40',
+        'description' : "Four friends went to the Vineyard to have a good time, but in the air they felt something ominous. Is there something in the air, earth or maybe in the vine?"   
+        })
+    db.commit();
+    cursor.close();
+
+    return f'seed_table_plays: OK';
+
+
+def seed_table_performances():
+    db = get_db_connection();
+    cursor = db.cursor();
+    
+    # 'id_performance int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
+    #     'id_play int NOT NULL FOREIGN KEY,' +
+    #     'id_hall int NOT NULL FOREIGN KEY,' +
+    #     'date_performance DATETIME NOT NULL,' +
+    #     'price_performance float(10))' 
+    #sql = 'INSERT INTO rezervator_reservations(id_user, id_performance, id_seat) VALUES (%(id_user)s, %(id_performance)s, %(id_seat)s)'
+    sql = 'INSERT INTO rezervator_performances(id_play, id_hall, date_performance, price_performance) VALUES (%(id_play)s, %(id_hall)s, %(date)s, %(price)s)'
+
+    cursor execute (sql ,
+        {'id_play' : '1', 'id_hall' : '1', 'date' : '2026-02-07 17:50:00', 'price' : '10' }) 
+
+    cursor execute (sql ,
+        {'id_play' : '1', 'id_hall' : '2', 'date' : '2026-02-07 19:00:00', 'price' : '10' }) 
+
+    cursor execute (sql ,
+        {'id_play' : '2', 'id_hall' : '1', 'date' : '2026-01-24 17:00:00', 'price' : '7' }) 
+
+    cursor execute (sql ,
+        {'id_play' : '2', 'id_hall' : '2', 'date' : '2026-01-24 17:45:00', 'price' : '7' })
+
+    cursor execute (sql ,
+        {'id_play' : '3', 'id_hall' : '1', 'date' : '2026-02-06 17:00:00', 'price' : '8' }) 
+
+    cursor execute (sql ,
+        {'id_play' : '3', 'id_hall' : '1', 'date' : '2026-02-06 17:45:00', 'price' : '8' }) 
+
+
+    db.commit();
+    cursor.close();
+
+    return f'seed_table_performances: OK';
+
+#TO DO
+def seed_table_halls():
+    db = get_db_connection();
+    cursor = db.cursor();
+
+    
+
+    db.commit();
+    cursor.close();
+
+    return f'seed_table_halls: OK';   
+
+#TO DO
+def seed_table_locations():
+    db = get_db_connection();
+    cursor = db.cursor();
+
+    
+
+    db.commit();
+    cursor.close();
+
+    return f'seed_table_locations: OK';
+
+#TO DO
+def seed_table_seats():
+    db = get_db_connection();
+    cursor = db.cursor();
+
+    
+
+    db.commit();
+    cursor.close();
+
+    return f'seed_table_seats: OK';
 
 # -------------------- TODO: Zamijeniti ovo sa stvarnim tablicama koje ćemo koristiti
 def seed_table_follows():
