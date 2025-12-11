@@ -241,20 +241,20 @@ def seed_table_users():
 def seed_table_reservations():
     db = get_db_connection();
     cursor = db.cursor();
-    
+
     sql = 'INSERT INTO rezervator_reservations(id_user, id_performance, id_seat) VALUES (%(id_user)s, %(id_performance)s, %(id_seat)s)'
 
-    cursor execute (sql , 
+    cursor execute (sql ,
         {'id_user': '1', 'id_performance': '1', 'id_seat' : '1'})
-    cursor execute (sql , 
+    cursor execute (sql ,
         {'id_user': '1', 'id_performance': '1', 'id_seat' : '2'})
-    cursor execute (sql , 
+    cursor execute (sql ,
         {'id_user': '2', 'id_performance': '1', 'id_seat' : '4'})
-    cursor execute (sql , 
+    cursor execute (sql ,
         {'id_user': '3', 'id_performance': '1', 'id_seat' : '7'})
-    cursor execute (sql , 
+    cursor execute (sql ,
         {'id_user': '4', 'id_performance': '2', 'id_seat' : '1'})
-    cursor execute (sql , 
+    cursor execute (sql ,
         {'id_user': '5', 'id_performance': '2', 'id_seat' : '5'})
 
     db.commit();
@@ -268,21 +268,21 @@ def seed_table_plays():
     db = get_db_connection();
     cursor = db.cursor();
 
-    
+
     sql = 'INSERT INTO rezervator_plays(title_play, genre_play, duration_play, description_play) VALUES (%(title)s, %(genre)s, %(duration)s, %(description)s)'
 
-    cursor execute (sql, 
+    cursor execute (sql,
         {'title' : 'Kosilica kosi lica', 'genre' : 'horror', 'duration' : '45',
         'description' : "After Matija inherits his grandfathers vineyard he and his friends soon discover that his grandfather's passing is not so innocent as it seems"}
         )
 
-    cursor execute (sql, 
+    cursor execute (sql,
         {'title' : 'Podzemni Akordi', 'genre' : 'action', 'duration' : '20',
         'description' : "When three teenage musicians show up to a seemingly empty rehearsal space, they expect nothing more than a jam session. Instead, they uncover a neo-Nazi hideout and a fresh corpse. As they scramble to escape, they're drawn into a violent cat-and-mouse game with a trio of dangerous extremists. What begins as a case of wrong place, wrong time spirals into a nightmarish battle for survival. In the silence between the chords, Podzemni Akordi strikes with tension, dark humor, and a raw portrayal of youth crashing into the brutal realities hidden beneath the surface of everyday life."})
 
-    cursor execute (sql, 
+    cursor execute (sql,
         {'title' : 'Đavolja loza', 'genre' : 'slasher', 'duration' : '40',
-        'description' : "Four friends went to the Vineyard to have a good time, but in the air they felt something ominous. Is there something in the air, earth or maybe in the vine?"   
+        'description' : "Four friends went to the Vineyard to have a good time, but in the air they felt something ominous. Is there something in the air, earth or maybe in the vine?"
         })
     db.commit();
     cursor.close();
@@ -293,32 +293,32 @@ def seed_table_plays():
 def seed_table_performances():
     db = get_db_connection();
     cursor = db.cursor();
-    
+
     # 'id_performance int NOT NULL PRIMARY KEY AUTO_INCREMENT,' +
     #     'id_play int NOT NULL FOREIGN KEY,' +
     #     'id_hall int NOT NULL FOREIGN KEY,' +
     #     'date_performance DATETIME NOT NULL,' +
-    #     'price_performance float(10))' 
+    #     'price_performance float(10))'
     #sql = 'INSERT INTO rezervator_reservations(id_user, id_performance, id_seat) VALUES (%(id_user)s, %(id_performance)s, %(id_seat)s)'
     sql = 'INSERT INTO rezervator_performances(id_play, id_hall, date_performance, price_performance) VALUES (%(id_play)s, %(id_hall)s, %(date)s, %(price)s)'
 
     cursor execute (sql ,
-        {'id_play' : '1', 'id_hall' : '1', 'date' : '2026-02-07 17:50:00', 'price' : '10' }) 
+        {'id_play' : '1', 'id_hall' : '1', 'date' : '2026-02-07 17:50:00', 'price' : '10' })
 
     cursor execute (sql ,
-        {'id_play' : '1', 'id_hall' : '2', 'date' : '2026-02-07 19:00:00', 'price' : '10' }) 
+        {'id_play' : '1', 'id_hall' : '2', 'date' : '2026-02-07 19:00:00', 'price' : '10' })
 
     cursor execute (sql ,
-        {'id_play' : '2', 'id_hall' : '1', 'date' : '2026-01-24 17:00:00', 'price' : '7' }) 
+        {'id_play' : '2', 'id_hall' : '1', 'date' : '2026-01-24 17:00:00', 'price' : '7' })
 
     cursor execute (sql ,
         {'id_play' : '2', 'id_hall' : '2', 'date' : '2026-01-24 17:45:00', 'price' : '7' })
 
     cursor execute (sql ,
-        {'id_play' : '3', 'id_hall' : '1', 'date' : '2026-02-06 17:00:00', 'price' : '8' }) 
+        {'id_play' : '3', 'id_hall' : '1', 'date' : '2026-02-06 17:00:00', 'price' : '8' })
 
     cursor execute (sql ,
-        {'id_play' : '3', 'id_hall' : '1', 'date' : '2026-02-06 17:45:00', 'price' : '8' }) 
+        {'id_play' : '3', 'id_hall' : '1', 'date' : '2026-02-06 17:45:00', 'price' : '8' })
 
 
     db.commit();
@@ -331,19 +331,19 @@ def seed_table_halls():
     db = get_db_connection();
     cursor = db.cursor();
 
-    
+
 
     db.commit();
     cursor.close();
 
-    return f'seed_table_halls: OK';   
+    return f'seed_table_halls: OK';
 
 #TO DO
 def seed_table_locations():
     db = get_db_connection();
     cursor = db.cursor();
 
-    
+
 
     db.commit();
     cursor.close();
@@ -355,7 +355,7 @@ def seed_table_seats():
     db = get_db_connection();
     cursor = db.cursor();
 
-    
+
 
     db.commit();
     cursor.close();
