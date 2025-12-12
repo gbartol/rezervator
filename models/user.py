@@ -13,3 +13,6 @@ class User(db.Model):
     email: Mapped[str] = mapped_column(String(50))
     registration_sequence: Mapped[str] = mapped_column(String(20))
     has_registered: Mapped[int]
+
+    # Veze između tablica
+    reservations: Mapped[list['Reservation']] = relationship('Reservation', back_populates='user')

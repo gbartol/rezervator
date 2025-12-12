@@ -1,6 +1,5 @@
-from sqlalchemy import Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
-from models.location import Location
+from sqlalchemy import Integer, String, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models.models import db
 
 class Hall(db.Model):
@@ -13,4 +12,4 @@ class Hall(db.Model):
     hall_capacity: Mapped[int]
 
     # Veze između tablica
-    location: Mapped[Location] = relationship('Location')
+    location: Mapped['Location'] = relationship('Location')

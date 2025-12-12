@@ -1,8 +1,5 @@
-from sqlalchemy import Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
-from models.user import User
-from models.performance import Performance
-from models.seat import Seat
+from sqlalchemy import Integer, String, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models.models import db
 
 class Reservation(db.Model):
@@ -16,6 +13,6 @@ class Reservation(db.Model):
     id_seat: Mapped[int] = mapped_column(ForeignKey('seats.id_seat'))
 
     # Veze između tablica
-    user: Mapped[User] = relationship('User')
-    performance: Mapped[Performance] = relationship('Performance')
-    seat: Mapped[Seat] = relationship('Seat')
+    user: Mapped['User'] = relationship('User', back_populates='reservations')
+    performance: Mapped['Performance'] = relationship('Performance')
+    seat: Mapped['Seat'] = relationship('Seat')
