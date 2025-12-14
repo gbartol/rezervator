@@ -14,4 +14,4 @@ from models.models import db
     description_play: Mapped[str] = mapped_column(String(1000))
 
     # Veze između tablica
-    performances: Mapped['Performance'] = relationship('Performance', back_populates='performances')
+    performances: Mapped[list['Performance']] = relationship('Performance', back_populates='play')

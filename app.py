@@ -1,9 +1,14 @@
 from flask import Flask, abort, redirect, session;
 from flask_session import Session;
+from flask_migrate import Migrate;
 from pymysql.err import MySQLError;
 import importlib;
 from db import get_db_connection;
 import db;
+
+# Model imports:
+import models.hall, models.location, models.performance, models.play, models.reservation, models.seat, models.user
+from models.models import db as sqlalchemy_db
 
 # --------------------------- Konfiguracija
 app = Flask( __name__ );
@@ -14,6 +19,10 @@ app.teardown_appcontext( db.close_db );
 app.config['SESSION_TYPE'] = 'cachelib';
 app.config['SESSION_PERMANENT'] = False;
 Session(app);
+
+# --------------------------- SQLAlchemy
+sqlalchemy_db.init_app(app)
+migrate = Migrate(app, sqlalchemy_db)
 
 # --------------------------- Rute
 @app.route('/')

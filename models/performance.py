@@ -15,6 +15,6 @@ class Performance(db.Model):
     price_performance: Mapped[float] = mapped_column(Float)
 
     # Veze između tablica
-    play: Mapped['Play'] = relationship('Play', back_populates='plays')
+    play: Mapped['Play'] = relationship('Play', back_populates='performances')
     hall: Mapped['Hall'] = relationship('Hall')
-    reservations: Mapped['Reservation'] = relationship('Reservation', back_populates='reservations')
+    reservations: Mapped[list['Reservation']] = relationship('Reservation', back_populates='performance')
