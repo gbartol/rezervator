@@ -1,6 +1,6 @@
 from sqlalchemy import Integer, String, DateTime, Float, ForeignKey
 from datetime import datetime
-from sqlalchemy.orm import Mapped, mapped_column, relationship, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models.models import db
 
 class Performance(db.Model):
@@ -15,5 +15,6 @@ class Performance(db.Model):
     price_performance: Mapped[float] = mapped_column(Float)
 
     # Veze između tablica
-    play: Mapped['Play'] = relationship('Play')
+    play: Mapped['Play'] = relationship('Play', back_populates='plays')
     hall: Mapped['Hall'] = relationship('Hall')
+    reservations: Mapped['Reservation'] = relationship('Reservation', back_populates='reservations')

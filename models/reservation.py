@@ -14,5 +14,5 @@ class Reservation(db.Model):
 
     # Veze između tablica
     user: Mapped['User'] = relationship('User', back_populates='reservations')
-    performance: Mapped['Performance'] = relationship('Performance')
+    performance: Mapped['Performance'] = relationship('Performance', back_populates='performances')
     seat: Mapped['Seat'] = relationship('Seat')
