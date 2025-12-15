@@ -1,4 +1,5 @@
-from sqlalchemy import Integer, String, ForeignKey
+from sqlalchemy import Integer, String, DateTime, ForeignKey
+from datetime import datetime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from models.models import db
 
@@ -11,6 +12,7 @@ class Reservation(db.Model):
     id_user: Mapped[int] = mapped_column(ForeignKey('users.id_user'))
     id_performance: Mapped[int] = mapped_column(ForeignKey('performances.id_performance'))
     id_seat: Mapped[int] = mapped_column(ForeignKey('seats.id_seat'))
+    date_reservation: Mapped[datetime] = mapped_column(DateTime)
 
     # Veze između tablica
     user: Mapped['User'] = relationship('User', back_populates='reservations')

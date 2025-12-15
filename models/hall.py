@@ -9,7 +9,8 @@ class Hall(db.Model):
     # Opis svakog stupca
     id_hall: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     id_location: Mapped[int] = mapped_column(ForeignKey('locations.id_location'))
-    hall_capacity: Mapped[int]
+    capacity_hall: Mapped[int]
+    category_hall: Mapped[str] = mapped_column(String(10))
 
     # Veze između tablica
     location: Mapped['Location'] = relationship('Location')
