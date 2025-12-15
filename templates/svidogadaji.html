@@ -5,9 +5,15 @@
 <div class="search">
 </div>
 
-<ul class="dogadaji">
-    {% for dogadaj in dogadaji %}
-        <li class="dogadaj">
+<ul class="performances">
+    {% for performance in performances %}
+        <li class="performance">
+            <h3> {{ performance.play.title_play }} </h3>
+            <h5> {{ performance.play.genre_play }} </h5>
+            <h5> {{ performance.play.duration_play }} </h5>
+            <p> {{ performance.play.description_play }} </p>
+            <p><strong> {{ performance.date_performance }} </strong></p>
+            <p><strong> {{ performance.price_performance }} </strong></p>
         </li>
     {% endfor %}
 </ul>

@@ -1,20 +1,15 @@
 from flask import render_template
 from pymysql.err import MySQLError
-from db import get_db_connection
+from models.models import db
+
+from models.performance import Performance
+from models.play import Play
 
 class SvidogadajiController:
     def index(self):
-        # Inicijaliziramo listu 'dogadaji' na praznu listu
-        dogadaji = []
+        # Inicijaliziramo listu 'performances' na praznu listu
+        performances = []
 
-        try:
-            # Spajamo se na bazu
-            db = get_db_connection()
-            cursor = db.cursor()
+        performances = db.session.execute(db.select(Performance)).scalars().all()
 
-            # TODO: Osmisliti bazu podataka, napisati SQL naredbe...
-
-            return render_template( 'kazaliste.html', dogadaji=dogadaji, msg='' )
-
-        except MySQLError as err:
-            return render_template( 'svidogadaji.html', dogadaji=dogadaji, msg=err )
+        return render_template( 'svidogadaji.html', performances=performances )
