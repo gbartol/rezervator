@@ -23,7 +23,7 @@ SQLAlchemy i migracije
 * `flask db migrate -m "poruka"` - Prvi put i nakon svake izmjene nekog modela.
 * `flask db upgrade` - Da se zaista provede migracija.
 * `flask db downgrade` - Za izbrisati tablice
-* ili ako ih to ne izbriše napisati u PHPMyAdmin SQL konzolu: `DROP TABLE reservations, seats, performances, halls, locations, plays, users, alembic_version` (u tom redosljedu)
+* ili ako ih to ne izbriše napisati u PHPMyAdmin SQL konzolu: `DROP TABLE reservations, seats, performances, halls, locations, plays, users, alembic_version` (u tom redosljedu). Tada morate izbrisati folder migrations/ i ponoviti naredbe napisane gore (`flask db init`, ...)
 
 Kod aplikacija koje koriste migracije bismo trebali imati zasebnu bazu za svaku aplikaciju. Naime:
 **Oprez:** Ako u bazi postoje neke druge tablice od prije, a modeli ih ne koriste, **migracija će ih sve obrisati**.
