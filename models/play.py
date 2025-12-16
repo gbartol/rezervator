@@ -11,7 +11,7 @@ class Play(db.Model):
     title_play: Mapped[str] = mapped_column(String(140))
     genre_play: Mapped[str] = mapped_column(String(140))
     duration_play: Mapped[time] = mapped_column(Time)
-    description_play: Mapped[str] = mapped_column(String(1000))
+    description_play: Mapped[str] = mapped_column(String(5000))
     category_play: Mapped[str] = mapped_column(String(10))
 
     # Veze između tablica

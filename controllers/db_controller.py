@@ -49,6 +49,9 @@ class DbController:
 
             loza = Play( title_play='Đavolja loza', genre_play='slasher', duration_play=datetime.time(0, 40), description_play="Four friends went to the Vineyard to have a good time, but in the air they felt something ominous. Is there something in the air, earth or maybe in the vine?", category_play='movie' )
             db.session.add( loza )
+
+            rondo = Play( title_play='Rondo', genre_play='drama', duration_play=datetime.time(1, 35), description_play='Dizajner Feđa sredovječni je Zagrepčanin koji s mladom suprugom Nedom živi u uređenom potkrovlju u središtu grada. Promatrajući jednog dana u parku dvojicu šahista, Feđa upoznaje povučenog suca Mladena, također pasioniranog šahista i kibicera. Među dvojicom muškaraca ubrzo se razvije neobičan poluprijateljski odnos, te Mladen počne redovito nedjeljom poslijepodne posjećivati Feđu i s njim igrati šah. Tijekom tih druženja između Mladena i Nede, nezadovoljne time što njezin suprug još uvijek nije spreman imati dijete, počet će se razvijati obostrana naklonost... Tako bi se ukratko mogao opisati sadržaj filma "Rondo", "impresivne komorne urbane romantične psihološke drame", debitantskog i najuspjelijeg ostvarenja Zvonimira Berkovića. Jedan od najcjenjenijih filmova autorske kinematografije u Hrvatskoj 1960-ih, karakterna je studija ljubavnog trokuta, gdje "ritual monotonog druženja ne pogoduje dinamičnom razvoju dramskih sukoba, no zato motivira nagle, hirovite promjene, opravdane temeljnim nezadovoljstvima". Zanimljiv je podatak da je Berković radio kao dramaturg u tadašnjem Zagrebačkom dramskom kazalištu, danas kazalištu "Gavella", odmah po njegovom osnutku, odakle je prešao u Jadran film i posvetio se filmskom stvaralaštvu, režirajući je dokumentarne i igrane filmove, među kojima su uz "Rondo" i "Putovanje na mjesto nesreće", "Ljubavna pisma s predumišljajem", "Kontesa Dora", a Berković je i koscenarist filma "H-8". Po prvi put na kazališnoj sceni, "Rondo" postavlja dugogodišnji član ansambla kazališta "Gavella", Janko Rakoš.', category_play='play')
+            db.session.add( rondo )
             # Da iduće tablice mogu iskoristiti id_play
             db.session.flush()
 
@@ -59,16 +62,22 @@ class DbController:
 
             loc2 = Location( name_location='Kino Tuškanac', address_location='Tuškanac 1' )
             db.session.add( loc2 )
+
+            loc3 = Location( name_location='Gavella', address_location='Frankopanska 10' )
+            db.session.add( loc3 )
             # Da iduće tablice mogu iskoristiti id_location
             db.session.flush()
 
 
             # halls:
-            hall1 = Hall( location=loc1, capacity_hall=100, category_hall='movie' )
+            hall1 = Hall( location=loc1, name_hall='Dvorana A', capacity_hall=100, category_hall='cinema' )
             db.session.add( hall1 )
 
-            hall2 = Hall( location=loc2, capacity_hall=80, category_hall='movie' )
+            hall2 = Hall( location=loc2, name_hall='Dvorana C2', capacity_hall=80, category_hall='cinema' )
             db.session.add( hall2 )
+
+            hall3 = Hall( location=loc3, name_hall='Mala Gavella', capacity_hall=70, category_hall='theatre' )
+            db.session.add( hall3 )
             # Da iduće tablice mogu iskoristiti id_hall
             db.session.flush()
 
@@ -91,6 +100,12 @@ class DbController:
 
             per6 = Performance( play=loza, hall=hall1, date_performance=datetime.datetime(2026, 2, 6, 17, 45), price_performance=8 )
             db.session.add( per6 )
+
+            per7 = Performance( play=rondo, hall=hall3, date_performance=datetime.datetime(2025, 12, 30, 19), price_performance=14.99 )
+            db.session.add( per7 )
+
+            per8 = Performance( play=rondo, hall=hall3, date_performance=datetime.datetime(2026, 3, 27, 19, 30), price_performance=12.50 )
+            db.session.add( per8 )
             # Da iduće tablice mogu iskoristiti id_performance
             db.session.flush()
 
@@ -109,6 +124,13 @@ class DbController:
                     seat = Seat( hall=hall2, row_seat=i, column_seat=j )
                     db.session.add( seat )
                     hall2_seats.append(seat)
+
+            hall3_seats = []
+            for i in range(1,11):
+                for j in range(1,8):
+                    seat = Seat( hall=hall3, row_seat=i, column_seat=j )
+                    db.session.add( seat )
+                    hall3_seats.append(seat)
             # Da iduće tablice mogu iskoristiti id_seat
             db.session.flush()
 
@@ -131,6 +153,11 @@ class DbController:
 
             res6 = Reservation( user=franjo, performance=per2, seat=hall1_seats[6], date_reservation=datetime.datetime(2025, 11, 23, 15, 28) )
             db.session.add( res6 )
+
+            res7 = Reservation( user=mance, performance=per7, seat=hall3_seats[55], date_reservation=datetime.datetime(2025, 12, 15, 20, 55) )
+            db.session.add( res7 )
+            res8 = Reservation( user=leon, performance=per8, seat=hall3_seats[34], date_reservation=datetime.datetime(2025, 12, 8, 21, 50) )
+            db.session.add( res8 )
 
             # Commitamo sve promjene:
             db.session.commit()
