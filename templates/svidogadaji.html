@@ -3,6 +3,21 @@
 {% block contents %}
 
 <div class="search">
+    <form action="/svidogadaji" method="post">
+        <select name="location">
+            <option value="all_locations" {% if selected_location == 'all_locations' %}selected{% endif %}>Sve lokacije</option>
+            {% for location in locations %}
+            <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>{{ location }}</option>
+            {% endfor %}
+        </select>
+        <select name="play">
+            <option value="all_plays" {% if selected_play == 'all_plays' %}selected{% endif %}>All plays</option>
+            {% for play in plays %}
+            <option value="{{ play }}" {% if selected_play == play %}selected{% endif %}>{{ play }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Filtriraj">
+    </form>
 </div>
 
 <ul class="performances">
