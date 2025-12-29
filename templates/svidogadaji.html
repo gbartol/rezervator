@@ -11,7 +11,7 @@
             {% endfor %}
         </select>
         <select name="play">
-            <option value="all_plays" {% if selected_play == 'all_plays' %}selected{% endif %}>All plays</option>
+            <option value="all_plays" {% if selected_play == 'all_plays' %}selected{% endif %}>Sve izvedbe</option>
             {% for play in plays %}
             <option value="{{ play }}" {% if selected_play == play %}selected{% endif %}>{{ play }}</option>
             {% endfor %}
@@ -20,16 +20,21 @@
     </form>
 </div>
 
+<br>
+
 <ul class="performances">
     {% for performance in performances %}
         <li class="performance">
             <h3> {{ performance.play.title_play }} </h3>
+            <h5> {{performance.hall.name_hall}} - {{ performance.hall.location.name_location }}</h5>
             <h5> {{ performance.play.genre_play }} </h5>
             <h5> {{ performance.play.duration_play }} </h5>
+            <br>
             <p> {{ performance.play.description_play }} </p>
             <p><strong> {{ performance.date_performance }} </strong></p>
             <p><strong> {{ performance.price_performance }} </strong></p>
         </li>
+        <br>
     {% endfor %}
 </ul>
 
